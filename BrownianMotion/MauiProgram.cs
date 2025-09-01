@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using BrownianMotion.Views;
+using BrownianMotion.ViewModels;
 
 namespace BrownianMotion
 {
@@ -20,6 +22,9 @@ namespace BrownianMotion
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
 
             return builder.Build();
         }
