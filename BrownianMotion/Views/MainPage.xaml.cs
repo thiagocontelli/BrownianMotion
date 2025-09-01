@@ -1,4 +1,4 @@
-﻿namespace BrownianMotion
+﻿namespace BrownianMotion.Views
 {
     public partial class MainPage : ContentPage
     {
