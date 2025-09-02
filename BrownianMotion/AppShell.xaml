@@ -7,7 +7,7 @@
     Title="BrownianMotion">
 
     <ShellContent
-        Title="Home"
+        Title="Gráfico de Movimento Browniano"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
