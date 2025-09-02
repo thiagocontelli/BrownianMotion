@@ -15,11 +15,15 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private int numDays = 252;
     [ObservableProperty]
-    private int numSimulations = 1;
+    private int numSimulations = 5;
 
     [ObservableProperty]
     private ObservableCollection<double[]> simulations = new();
 
+    public MainViewModel()
+    {
+        GenerateSimulationCommand.Execute(null);
+    }
 
     [RelayCommand]
     private void GenerateSimulation()
