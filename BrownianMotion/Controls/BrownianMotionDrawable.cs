@@ -2,13 +2,24 @@
 
 public class BrownianMotionDrawable : IDrawable
 {
-    public List<double[]> Simulations { get; set; } = new();
-
     private readonly Random _rand = new();
+
+    private List<double[]> _simulations = new();
+    private List<Color> _colors = new();
+
+    public List<double[]> Simulations
+    {
+        get => _simulations;
+        set
+        {
+            _simulations = value ?? new List<double[]>();
+            _colors = _simulations.Select(_ => Color.FromRgb(_rand.Next(256), _rand.Next(256), _rand.Next(256))).ToList();
+        }
+    }
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        if (Simulations == null || Simulations.Count == 0)
+        if (_simulations == null || _simulations.Count == 0)
             return;
 
         // Margens internas
@@ -17,28 +28,28 @@ public class BrownianMotionDrawable : IDrawable
         float height = dirtyRect.Height - padding * 2;
 
         // Descobre min e max global
-        double min = Simulations.Min(sim => sim.Min());
-        double max = Simulations.Max(sim => sim.Max());
+        double min = _simulations.Min(sim => sim.Min());
+        double max = _simulations.Max(sim => sim.Max());
 
         // Evita divisão por zero
         double range = max - min;
         if (range == 0) range = 1;
 
         // Desenha cada simulação
-        foreach (var sim in Simulations)
+        for (int i = 0; i < _simulations.Count; i++)
         {
-            // Cor aleatória
-            canvas.StrokeColor = Color.FromRgb(_rand.Next(256), _rand.Next(256), _rand.Next(256));
+            var sim = _simulations[i];
+            canvas.StrokeColor = _colors[i];
             canvas.StrokeSize = 1;
 
             // Normaliza e desenha linha
-            for (int i = 1; i < sim.Length; i++)
+            for (int j = 1; j < sim.Length; j++)
             {
-                float x1 = padding + (float)((i - 1) / (double)(sim.Length - 1) * width);
-                float y1 = padding + (float)((max - sim[i - 1]) / range * height);
+                float x1 = padding + (float)((j - 1) / (double)(sim.Length - 1) * width);
+                float y1 = padding + (float)((max - sim[j - 1]) / range * height);
 
-                float x2 = padding + (float)(i / (double)(sim.Length - 1) * width);
-                float y2 = padding + (float)((max - sim[i]) / range * height);
+                float x2 = padding + (float)(j / (double)(sim.Length - 1) * width);
+                float y2 = padding + (float)((max - sim[j]) / range * height);
 
                 canvas.DrawLine(x1, y1, x2, y2);
             }
