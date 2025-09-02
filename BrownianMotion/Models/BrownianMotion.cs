@@ -6,7 +6,7 @@ public class BrownianMotion(double sigma, double mean, double initialPrice, int 
     public double Mean { get; } = mean;
     public double InitialPrice { get; } = initialPrice;
     public int NumDays { get; } = numDays;
-    public static double[] Generate(double sigma, double mean, double initialPrice, int numDays)
+    public double[] Generate()
     {
         Random rand = new Random();
         double[] prices = new double[numDays];

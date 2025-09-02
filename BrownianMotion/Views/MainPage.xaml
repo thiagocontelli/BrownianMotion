@@ -2,12 +2,14 @@
 <ContentPage
     x:Class="BrownianMotion.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BrownianMotion.Controls">
     <ScrollView>
         <Grid
             Padding="20"
             ColumnDefinitions="7*,3*"
             ColumnSpacing="16">
+            <controls:BrownianMotionChart Simulations="{Binding Simulations}" />
             <VerticalStackLayout Grid.Column="1" Spacing="16">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Preço inicial" />
