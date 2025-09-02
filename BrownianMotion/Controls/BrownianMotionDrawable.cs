@@ -22,27 +22,39 @@ public class BrownianMotionDrawable : IDrawable
         if (_simulations == null || _simulations.Count == 0)
             return;
 
-        // Margens internas
         float padding = 0;
         float width = dirtyRect.Width - padding * 2;
         float height = dirtyRect.Height - padding * 2;
 
-        // Descobre min e max global
         double min = _simulations.Min(sim => sim.Min());
         double max = _simulations.Max(sim => sim.Max());
-
-        // Evita divisão por zero
         double range = max - min;
         if (range == 0) range = 1;
 
-        // Desenha cada simulação
+        canvas.StrokeColor = Colors.Gray.WithAlpha(0.10f);
+        canvas.StrokeSize = 1;
+
+        int numVerticalLines = 10;
+        int numHorizontalLines = 10;
+
+        for (int i = 0; i <= numVerticalLines; i++)
+        {
+            float x = padding + (i / (float)numVerticalLines) * width;
+            canvas.DrawLine(x, padding, x, padding + height);
+        }
+
+        for (int j = 0; j <= numHorizontalLines; j++)
+        {
+            float y = padding + (j / (float)numHorizontalLines) * height;
+            canvas.DrawLine(padding, y, padding + width, y);
+        }
+
         for (int i = 0; i < _simulations.Count; i++)
         {
             var sim = _simulations[i];
             canvas.StrokeColor = _colors[i];
             canvas.StrokeSize = 1;
 
-            // Normaliza e desenha linha
             for (int j = 1; j < sim.Length; j++)
             {
                 float x1 = padding + (float)((j - 1) / (double)(sim.Length - 1) * width);
