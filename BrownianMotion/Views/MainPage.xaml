@@ -36,7 +36,7 @@
                 Grid.Column="1"
                 Spacing="16">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Preço inicial" />
+                    <Label Text="Preço inicial (R$)" />
                     <Entry Text="{Binding InitialPrice}" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="8">
