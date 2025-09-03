@@ -24,7 +24,7 @@ public class BrownianMotionDrawable : IDrawable
         if (_simulations == null || _simulations.Count == 0)
             return;
 
-        float padding = 0;
+        float padding = 40;
         float width = dirtyRect.Width - padding * 2;
         float height = dirtyRect.Height - padding * 2;
 
@@ -33,24 +33,8 @@ public class BrownianMotionDrawable : IDrawable
         double range = max - min;
         if (range == 0) range = 1;
 
-        canvas.StrokeColor = Colors.Gray.WithAlpha(0.25f);
-        canvas.StrokeSize = 1;
-        canvas.StrokeDashPattern = null;
-
-        int numVerticalLines = 10;
-        int numHorizontalLines = 10;
-
-        for (int i = 0; i <= numVerticalLines; i++)
-        {
-            float x = padding + (i / (float)numVerticalLines) * width;
-            canvas.DrawLine(x, padding, x, padding + height);
-        }
-
-        for (int j = 0; j <= numHorizontalLines; j++)
-        {
-            float y = padding + (j / (float)numHorizontalLines) * height;
-            canvas.DrawLine(padding, y, padding + width, y);
-        }
+        DrawGrid(canvas, padding, width, height);
+        DrawAxisLabels(canvas, padding, width, height, min, max, _simulations[0].Length);
 
         for (int i = 0; i < _simulations.Count; i++)
         {
@@ -79,4 +63,49 @@ public class BrownianMotionDrawable : IDrawable
         }
     }
 
+    private void DrawGrid(ICanvas canvas, float padding, float width, float height)
+    {
+        canvas.StrokeColor = Colors.Gray.WithAlpha(0.25f);
+        canvas.StrokeSize = 1;
+        canvas.StrokeDashPattern = null;
+
+        int numVerticalLines = 10;
+        int numHorizontalLines = 10;
+
+        for (int i = 0; i <= numVerticalLines; i++)
+        {
+            float x = padding + (i / (float)numVerticalLines) * width;
+            canvas.DrawLine(x, padding, x, padding + height);
+        }
+
+        for (int j = 0; j <= numHorizontalLines; j++)
+        {
+            float y = padding + (j / (float)numHorizontalLines) * height;
+            canvas.DrawLine(padding, y, padding + width, y);
+        }
+    }
+
+    private void DrawAxisLabels(ICanvas canvas, float padding, float width, float height, double min, double max, int numDays)
+    {
+        canvas.FontColor = Colors.Gray;
+        canvas.FontSize = 12;
+        canvas.Font = new Microsoft.Maui.Graphics.Font("Arial");
+
+        int verticalLabels = 5;
+        int horizontalLabels = 5;
+
+        for (int i = 0; i <= verticalLabels; i++)
+        {
+            float y = padding + i * (height / verticalLabels);
+            double price = max - ((max - min) / verticalLabels) * i;
+            canvas.DrawString($"{Math.Round(price)}", padding - 10, y, HorizontalAlignment.Right);
+        }
+
+        for (int i = 0; i <= horizontalLabels; i++)
+        {
+            float x = padding + i * (width / horizontalLabels);
+            int day = (int)(i * (numDays - 1) / horizontalLabels) + 1;
+            canvas.DrawString($"{day}", x, padding + height + 20, HorizontalAlignment.Center);
+        }
+    }
 }
