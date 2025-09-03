@@ -7,6 +7,8 @@ public class BrownianMotionDrawable : IDrawable
     private List<double[]> _simulations = new();
     private List<Color> _colors = new();
 
+    public string LineStyle { get; set; } = "Solid";
+
     public List<double[]> Simulations
     {
         get => _simulations;
@@ -31,8 +33,9 @@ public class BrownianMotionDrawable : IDrawable
         double range = max - min;
         if (range == 0) range = 1;
 
-        canvas.StrokeColor = Colors.Gray.WithAlpha(0.10f);
+        canvas.StrokeColor = Colors.Gray.WithAlpha(0.25f);
         canvas.StrokeSize = 1;
+        canvas.StrokeDashPattern = null;
 
         int numVerticalLines = 10;
         int numHorizontalLines = 10;
@@ -55,6 +58,14 @@ public class BrownianMotionDrawable : IDrawable
             canvas.StrokeColor = _colors[i];
             canvas.StrokeSize = 1;
 
+            canvas.StrokeDashPattern = LineStyle switch
+            {
+                "Dashed" => [6, 3],
+                "Dotted" => [2, 2],
+                "DashDot" => [6, 2, 2, 2],
+                _ => null
+            };
+
             for (int j = 1; j < sim.Length; j++)
             {
                 float x1 = padding + (float)((j - 1) / (double)(sim.Length - 1) * width);
@@ -67,4 +78,5 @@ public class BrownianMotionDrawable : IDrawable
             }
         }
     }
+
 }

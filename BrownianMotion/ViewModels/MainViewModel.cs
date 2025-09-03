@@ -16,6 +16,14 @@ public partial class MainViewModel : ObservableObject
     private int numDays = 252;
     [ObservableProperty]
     private int numSimulations = 5;
+    [ObservableProperty]
+    private string lineStyle = "Solid";
+    [ObservableProperty]
+    private bool isSolidChecked = true;
+    [ObservableProperty]
+    private bool isDashedChecked;
+    [ObservableProperty]
+    private bool isDottedChecked;
 
     [ObservableProperty]
     private ObservableCollection<double[]> simulations = new();
@@ -23,6 +31,21 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel()
     {
         GenerateSimulationCommand.Execute(null);
+    }
+
+    partial void OnIsDottedCheckedChanged(bool value)
+    {
+        if (value) LineStyle = "Dotted";
+    }
+
+    partial void OnIsDashedCheckedChanged(bool value)
+    {
+        if (value) LineStyle = "Dashed";
+    }
+
+    partial void OnIsSolidCheckedChanged(bool value)
+    {
+        if (value) LineStyle = "Solid";
     }
 
     [RelayCommand]
@@ -42,4 +65,11 @@ public partial class MainViewModel : ObservableObject
             Simulations.Add(brownianMotion.Generate());
         }
     }
+
+    [RelayCommand]
+    private void ChangeLineStyle(string style)
+    {
+        LineStyle = style;
+    }
+
 }

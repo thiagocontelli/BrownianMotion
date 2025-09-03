@@ -15,11 +15,11 @@ public partial class BrownianMotionChart : ContentView
     }
 
     public static readonly BindableProperty SimulationsProperty =
-    BindableProperty.Create(
-        nameof(Simulations),
-        typeof(ObservableCollection<double[]>),
-        typeof(BrownianMotionChart),
-        propertyChanged: OnSimulationsChanged);
+        BindableProperty.Create(
+            nameof(Simulations),
+            typeof(ObservableCollection<double[]>),
+            typeof(BrownianMotionChart),
+            propertyChanged: OnSimulationsChanged);
 
     public ObservableCollection<double[]> Simulations
     {
@@ -54,4 +54,27 @@ public partial class BrownianMotionChart : ContentView
         }
     }
 
+    public static readonly BindableProperty LineStyleProperty =
+        BindableProperty.Create(
+            nameof(LineStyle),
+            typeof(string),
+            typeof(BrownianMotionChart),
+            "Solid",
+            propertyChanged: OnLineStyleChanged);
+
+    public string LineStyle
+    {
+        get => (string)GetValue(LineStyleProperty);
+        set => SetValue(LineStyleProperty, value);
+    }
+
+    private static void OnLineStyleChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (BrownianMotionChart)bindable;
+        if (newValue is string style)
+        {
+            control._drawable.LineStyle = style;
+            control.Canvas.Invalidate();
+        }
+    }
 }

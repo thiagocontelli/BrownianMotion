@@ -8,9 +8,33 @@
         <Grid
             Padding="20"
             ColumnDefinitions="7*,3*"
-            ColumnSpacing="16">
-            <controls:BrownianMotionChart Simulations="{Binding Simulations}" />
-            <VerticalStackLayout Grid.Column="1" Spacing="16">
+            ColumnSpacing="16"
+            RowDefinitions="*,Auto"
+            RowSpacing="16">
+            <controls:BrownianMotionChart LineStyle="{Binding LineStyle}" Simulations="{Binding Simulations}" />
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="Estilo de linha:" />
+                <HorizontalStackLayout Spacing="16">
+                    <RadioButton
+                        Content="Contínua"
+                        GroupName="LineStyle"
+                        IsChecked="{Binding IsSolidChecked, Mode=TwoWay}" />
+                    <RadioButton
+                        Content="Tracejada"
+                        GroupName="LineStyle"
+                        IsChecked="{Binding IsDashedChecked, Mode=TwoWay}" />
+                    <RadioButton
+                        Content="Pontilhada"
+                        GroupName="LineStyle"
+                        IsChecked="{Binding IsDottedChecked, Mode=TwoWay}" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                Spacing="16">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Preço inicial" />
                     <Entry Text="{Binding InitialPrice}" />
