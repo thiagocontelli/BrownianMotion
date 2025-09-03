@@ -71,7 +71,7 @@
                     <Label Text="{Binding NumSimulations, StringFormat='Número de simulações: {0}'}" />
                     <Slider
                         Maximum="100"
-                        Minimum="0"
+                        Minimum="1"
                         Value="{Binding NumSimulations}" />
                 </VerticalStackLayout>
 
