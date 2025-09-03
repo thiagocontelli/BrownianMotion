@@ -7,9 +7,9 @@ namespace BrownianMotion.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
-    private double sigma = 20;
+    private double sigma = 1;
     [ObservableProperty]
-    private double mean = 2;
+    private double mean = 0.01;
     [ObservableProperty]
     private double initialPrice = 100.0;
     [ObservableProperty]
