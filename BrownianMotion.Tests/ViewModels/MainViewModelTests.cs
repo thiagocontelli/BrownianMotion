@@ -17,8 +17,8 @@ namespace BrownianMotion.Tests
         {
             var vm = new MainViewModel();
 
-            Assert.Equal(20, vm.Sigma);
-            Assert.Equal(2, vm.Mean);
+            Assert.Equal(1, vm.Sigma);
+            Assert.Equal(0.01, vm.Mean);
             Assert.Equal(100.0, vm.InitialPrice);
             Assert.Equal(252, vm.NumDays);
             Assert.Equal(5, vm.NumSimulations);
